@@ -55,7 +55,7 @@ btn.addEventListener("click", () => {
 });
 
 const getData = async (finalCode) => {
-  let data = await fetch("http://127.0.0.1:5000/code", {
+  let data = await fetch("https://leetcode-code-formatter.vercel.app/code", {
     method: "POST",
     headers: {
       Accept: "application/json",
