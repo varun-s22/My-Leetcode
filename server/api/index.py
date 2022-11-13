@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
+from black import format_str, FileMode
 import subprocess as sp
 import uuid
 import os
@@ -10,9 +11,5 @@ CORS(app)
 @app.route("/code", methods=["POST"])
 def format_code():
     recieved_code=request.get_json()["code"]
-    filename = str(uuid.uuid4())
-    with open(f'/tmp/{filename}.py',"w") as external_file:
-        print(recieved_code,file=external_file)
-    formatted_code=sp.getoutput(f'black /tmp/{filename}.py 2>> /dev/null;cat /tmp/{filename}.py')
-    os.remove(f'/tmp/{filename}.py')
+    formatted_code = format_str(recieved_code, mode=FileMode())
     return {"formattedCode":formatted_code}
