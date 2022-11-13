@@ -11,8 +11,8 @@ CORS(app)
 def format_code():
     recieved_code=request.get_json()["code"]
     filename = str(uuid.uuid4())
-    with open(f'{filename}.py',"w") as external_file:
+    with open(f'/tmp/{filename}.py',"w") as external_file:
         print(recieved_code,file=external_file)
-    formatted_code=sp.getoutput(f'black {filename}.py 2>> /dev/null;cat {filename}.py')
-    os.remove(f'{filename}.py')
+    formatted_code=sp.getoutput(f'black /tmp/{filename}.py 2>> /dev/null;cat /tmp/{filename}.py')
+    os.remove(f'/tmp/{filename}.py')
     return {"formattedCode":formatted_code}
