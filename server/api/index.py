@@ -16,7 +16,3 @@ def format_code():
     formatted_code=sp.getoutput(f'black {filename}.py 2>> /dev/null;cat {filename}.py')
     os.remove(f'{filename}.py')
     return {"formattedCode":formatted_code}
-
-
-if (__name__ == "__main__"):
-    app.run(debug=True)
