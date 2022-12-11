@@ -1,33 +1,35 @@
 let btn = document.createElement("button");
-let span = document.createElement("span");
-span.innerText = "Format Code";
+btn.innerText = "Format Code";
 
 let isBtnPresent = false;
 
-let codeMirror = {};
+let monacoEditor = {};
 function getCodeMirror() {
-  let codeMirrorSelector = document.querySelector(".CodeMirror");
-  if (codeMirrorSelector === undefined || codeMirrorSelector === null) {
+  let monaco = window.monaco;
+  if (monaco === undefined || monaco === null) {
     // codemirror not found on page
     return;
   }
-  codeMirror = codeMirrorSelector.CodeMirror;
-  if (codeMirror === undefined) {
+  monacoEditor = monaco.editor;
+  if (monacoEditor === undefined) {
     // codeMirror not found
     return;
   }
 }
 const mutationObserver = new MutationObserver(() => {
   getCodeMirror();
-  let btnDiv = document.querySelector("button[data-cy='submit-code-btn']");
+  let btnParentDiv = document.querySelectorAll(".shrink-0");
+  let btnDiv =
+    btnParentDiv[btnParentDiv.length - 1].firstChild.firstChild.firstChild
+      .firstChild;
   if (btnDiv === undefined || btnDiv === null) {
     // buttons div not rendered yet
     return;
   }
   let parent = btnDiv.parentElement;
-  let languageDiv = document.querySelector(
-    ".ant-select-selection-selected-value"
-  );
+  let languageDiv = document.getElementsByClassName(
+    "text-xs text-label-2 dark:text-dark-label-2"
+  )[10];
   if (languageDiv === undefined || languageDiv === null) {
     // language div not rendered yet
     return;
@@ -38,11 +40,7 @@ const mutationObserver = new MutationObserver(() => {
   ) {
     if (!isBtnPresent) {
       parent.prepend(btn);
-      let btnDivSpan = btnDiv.childNodes[0];
-      span.className = btnDivSpan.className;
-      btn.style.padding = "1.2em";
       btn.className = btnDiv.className;
-      btn.append(span);
       isBtnPresent = true;
     }
   } else {
@@ -63,11 +61,12 @@ mutationObserver.observe(document, {
   subtree: true,
 });
 btn.addEventListener("click", () => {
-  const code = codeMirror.getValue();
+  const monacoModel = monacoEditor.getModels()[0];
+  const code = monacoModel.getValue();
   const getFormattedCode = async () => {
     try {
       let formattedCode = await getData(code);
-      codeMirror.setValue(formattedCode);
+      monacoModel.setValue(formattedCode);
     } catch (e) {
       console.log("Error while fetching formatted code");
       console.log(e);
