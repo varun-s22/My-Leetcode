@@ -4,7 +4,7 @@ btn.innerText = "Format Code";
 let isBtnPresent = false;
 
 let monacoEditor = {};
-function getCodeMirror() {
+function getMonaco() {
   let monaco = window.monaco;
   if (monaco === undefined || monaco === null) {
     // codemirror not found on page
@@ -17,11 +17,11 @@ function getCodeMirror() {
   }
 }
 const mutationObserver = new MutationObserver(() => {
-  getCodeMirror();
+  getMonaco();
   let btnParentDiv = document.querySelectorAll(".shrink-0");
-  let btnDiv =
-    btnParentDiv[btnParentDiv.length - 1].firstChild.firstChild.firstChild
-      .firstChild;
+  let btnDiv2 =
+    btnParentDiv[btnParentDiv.length - 1].firstChild.firstChild.lastChild;
+  let btnDiv = btnDiv2.childNodes[btnDiv2.childNodes.length - 2];
   if (btnDiv === undefined || btnDiv === null) {
     // buttons div not rendered yet
     return;
