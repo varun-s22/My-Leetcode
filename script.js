@@ -21,7 +21,12 @@ const mutationObserver = new MutationObserver(() => {
   let btnParentDiv = document.querySelectorAll(".shrink-0");
   let btnDiv2 =
     btnParentDiv[btnParentDiv.length - 1].firstChild.firstChild.lastChild;
+  if (btnDiv2 === undefined || btnDiv2 === null) {
+    return;
+  }
+  console.log(btnDiv2);
   let btnDiv = btnDiv2.childNodes[btnDiv2.childNodes.length - 2];
+  console.log(btnDiv);
   if (btnDiv === undefined || btnDiv === null) {
     // buttons div not rendered yet
     return;
@@ -29,7 +34,7 @@ const mutationObserver = new MutationObserver(() => {
   let parent = btnDiv.parentElement;
   let languageDiv = document.getElementsByClassName(
     "text-xs text-label-2 dark:text-dark-label-2"
-  )[10];
+  )[14];
   if (languageDiv === undefined || languageDiv === null) {
     // language div not rendered yet
     return;
