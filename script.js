@@ -24,17 +24,13 @@ const mutationObserver = new MutationObserver(() => {
   if (btnDiv2 === undefined || btnDiv2 === null) {
     return;
   }
-  console.log(btnDiv2);
   let btnDiv = btnDiv2.childNodes[btnDiv2.childNodes.length - 2];
-  console.log(btnDiv);
   if (btnDiv === undefined || btnDiv === null) {
     // buttons div not rendered yet
     return;
   }
   let parent = btnDiv.parentElement;
-  let languageDiv = document.getElementsByClassName(
-    "text-xs text-label-2 dark:text-dark-label-2"
-  )[14];
+  let languageDiv = document.querySelectorAll(".relative")[12];
   if (languageDiv === undefined || languageDiv === null) {
     // language div not rendered yet
     return;
