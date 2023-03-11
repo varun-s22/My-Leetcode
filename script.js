@@ -30,7 +30,7 @@ const mutationObserver = new MutationObserver(() => {
     return;
   }
   let parent = btnDiv.parentElement;
-  let languageDiv = document.querySelectorAll(".relative")[12];
+  let languageDiv = Array.from(document.querySelectorAll(".relative")).at(-1);
   if (languageDiv === undefined || languageDiv === null) {
     // language div not rendered yet
     return;
